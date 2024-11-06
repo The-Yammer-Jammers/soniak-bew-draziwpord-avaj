@@ -7,9 +7,3 @@ CREATE TABLE Employee (
 	nationalInsuranceNumber varchar(9),
 	PRIMARY KEY(employeeId)
 );
-
-CREATE TABLE DeliveryEmployee (
-	employeeId int NOT NULL,
-	PRIMARY KEY(employeeId),
-	FOREIGN KEY (employeeId) REFERENCES Employee(employeeId)
-);
