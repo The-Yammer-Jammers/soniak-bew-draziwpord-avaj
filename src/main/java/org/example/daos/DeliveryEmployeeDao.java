@@ -1,6 +1,8 @@
 package org.example.daos;
 
 import org.example.models.DeliveryEmployee;
+import org.example.models.DeliveryEmployeeCreateRequest;
+import org.example.models.DeliveryEmployeeRequest;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -49,7 +51,7 @@ public class DeliveryEmployeeDao {
         try (Connection connection = DatabaseConnector.getConnection()) {
 
             String query =
-                    "SELECT employeeId, firstName, lastName, salary, bankAccountNumber, nationalInsuranceNumber FROM Employee WHERE employeeId IN (SELECT employeeId FROM DeliveryEmployee WHERE employeeId = (?));";
+                    "SELECT employeeId, firstName, lastName, salary, bankAccountNumber, nationalInsuranceNumber FROM Employee WHERE employeeId IN (SELECT employeeId FROM DeliveryEmployee WHERE employeeId=(?));";
 
             PreparedStatement statement = connection.prepareStatement(query);
 
@@ -70,5 +72,93 @@ public class DeliveryEmployeeDao {
         }
 
         return deliveryEmployee;
+    }
+
+    public void updateDeliveryEmployee(
+            final int id, final DeliveryEmployeeRequest deliveryEmployee
+    )
+            throws SQLException {
+        try (Connection conn = DatabaseConnector.getConnection()) {
+            String statement = "UPDATE Employee SET firstName=(?), lastName=(?), salary=(?), bankAccountNumber=(?) WHERE employeeId IN (SELECT employeeId FROM DeliveryEmployee WHERE employeeId=(?));";
+            // Statement will be null if the id inputted by user is not in DeliveryEmployee table, handle in front-end?
+            PreparedStatement pst = conn.prepareStatement(statement);
+
+            final int firstNameIndex = 1;
+            final int lastNameIndex = 2;
+            final int salaryIndex = 3;
+            final int bankAccountNumberIndex = 4;
+            final int lastInt = 5;
+
+            pst.setString(firstNameIndex, deliveryEmployee.getFirstName());
+            pst.setString(lastNameIndex, deliveryEmployee.getLastName());
+            pst.setDouble(salaryIndex, deliveryEmployee.getSalary());
+            pst.setString(bankAccountNumberIndex, deliveryEmployee.getBankAccountNumber());
+            pst.setInt(lastInt, id);
+
+            pst.executeUpdate();
+        }
+    }
+
+    public int createDeliveryEmployee(
+            final DeliveryEmployeeCreateRequest deliveryEmployee
+    ) throws SQLException {
+        Connection conn = DatabaseConnector.getConnection();
+
+        String insertStatement = "INSERT INTO Employee (firstName, lastName, salary, bankAccountNumber, nationalInsuranceNumber) VALUES (?,?,?,?,?);";
+
+        PreparedStatement pst = conn.prepareStatement(
+                insertStatement, Statement.RETURN_GENERATED_KEYS
+        );
+
+        final int firstNameIndex = 1;
+        final int lastNameIndex = 2;
+        final int salaryIndex = 3;
+        final int bankAccountNumberIndex = 4;
+        final int nationalInsuranceNumberIndex = 5;
+
+        pst.setString(firstNameIndex, deliveryEmployee.getFirstName());
+        pst.setString(lastNameIndex, deliveryEmployee.getLastName());
+        pst.setDouble(salaryIndex, deliveryEmployee.getSalary());
+        pst.setString(
+                bankAccountNumberIndex, deliveryEmployee.getBankAccountNumber()
+        );
+        pst.setString(nationalInsuranceNumberIndex,
+                deliveryEmployee.getNationalInsuranceNumber()
+        );
+
+        pst.executeUpdate();
+
+        ResultSet res = pst.getGeneratedKeys();
+
+        if (res.next()) {
+            String insertStatementDeliveryEmployee = "INSERT INTO DeliveryEmployee (employeeId) VALUES (?);";
+
+            PreparedStatement pstDeliveryEmployee = conn.prepareStatement(
+                    insertStatement, Statement.RETURN_GENERATED_KEYS
+            );
+
+            final int idIndex = 1;
+
+            pstDeliveryEmployee.setInt(idIndex, res.getInt(1));
+
+            return res.getInt(1);
+        }
+
+        return -1;
+    }
+
+    public void deleteDeliveryEmployee(final int id) throws SQLException {
+        Connection conn = DatabaseConnector.getConnection();
+
+        String statementDeliveryEmployee = "DELETE FROM DeliveryEmployee WHERE employeeId=(?);";
+        PreparedStatement pstDeliveryEmployee = conn.prepareStatement(statementDeliveryEmployee);
+        pstDeliveryEmployee.setInt(1, id);
+        pstDeliveryEmployee.executeUpdate();
+
+        String statement = "DELETE FROM Employee "
+                + "WHERE employeeId IN (SELECT employeeId FROM DeliveryEmployee WHERE employeeId=(?));";
+        PreparedStatement pst = conn.prepareStatement(statement);
+        pst.setInt(1, id);
+        pst.executeUpdate();
     }
 }
