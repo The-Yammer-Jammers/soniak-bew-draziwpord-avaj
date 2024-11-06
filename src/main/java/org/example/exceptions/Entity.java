@@ -1,4 +1,4 @@
-package org.soniakbew.exceptions;
+package org.example.exceptions;
 
 public enum Entity {
     CLIENT("Client"),
