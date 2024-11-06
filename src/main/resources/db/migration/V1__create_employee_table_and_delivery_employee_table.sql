@@ -1,4 +1,4 @@
-Employee (
+CREATE TABLE Employee (
 	employeeId int NOT NULL AUTO_INCREMENT,
 	firstName varchar(50),
 	lastName varchar(50),
@@ -8,7 +8,7 @@ Employee (
 	PRIMARY KEY(employeeId)
 );
 
-DeliveryEmployee (
+CREATE TABLE DeliveryEmployee (
 	employeeId int NOT NULL,
 	PRIMARY KEY(employeeId),
 	FOREIGN KEY (employeeId) REFERENCES Employee(employeeId)
