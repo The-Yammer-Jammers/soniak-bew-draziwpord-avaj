@@ -24,7 +24,7 @@ public class AuthService {
     final AuthDao authDao;
     final Key key;
 
-    final int tokenLifetime = 28800000;
+    static final int TOKEN_LIFETIME = 28800000;
     static final int SALT_LENGTH = 16;
     static final String HASH_ALGORITHM = "PBKDF2WithHmacSHA1";
     static final int HASH_LENGTH = 128;
@@ -98,7 +98,7 @@ public class AuthService {
                 .issuedAt(new Date(System.currentTimeMillis()))
                 .expiration(
                         new Date(System.currentTimeMillis()
-                                + tokenLifetime
+                                + TOKEN_LIFETIME
                         ))
                 .claim("Role", user.getRoleId())
                 .claim("Username", user.getUsername())
