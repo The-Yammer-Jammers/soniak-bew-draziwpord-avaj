@@ -4,9 +4,12 @@ import javax.security.auth.Subject;
 import java.security.Principal;
 
 public class JwtToken implements Principal {
+    String username;
     UserRole userRole;
 
-    public JwtToken(final UserRole userRole) {
+    public JwtToken(final String username,
+                    final UserRole userRole) {
+        this.username = username;
         this.userRole = userRole;
     }
 
@@ -20,7 +23,7 @@ public class JwtToken implements Principal {
 
     @Override
     public String getName() {
-        return null;
+        return username;
     }
 
     @Override

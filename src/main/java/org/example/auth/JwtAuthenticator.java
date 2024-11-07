@@ -1,6 +1,7 @@
 package org.example.auth;
 
 import io.dropwizard.auth.Authenticator;
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import org.example.models.JwtToken;
 import org.example.models.UserRole;
@@ -18,14 +19,16 @@ public class JwtAuthenticator implements Authenticator<String, JwtToken> {
     @Override
     public Optional<JwtToken> authenticate(final String token) {
         try {
-            Integer roleId = Jwts.parser()
+            Claims claims = Jwts.parser()
                     .verifyWith(key)
                     .build()
                     .parseSignedClaims(token)
-                    .getPayload()
-                    .get("Role", Integer.class);
+                    .getPayload();
 
-            JwtToken jwtToken = new JwtToken(new UserRole(roleId));
+            String username = claims.get("Username", String.class);
+            int roleId = claims.get("Role", Integer.class);
+
+            JwtToken jwtToken = new JwtToken(username, new UserRole(roleId));
             return Optional.of(jwtToken);
         } catch (Exception e) {
             return Optional.empty();
