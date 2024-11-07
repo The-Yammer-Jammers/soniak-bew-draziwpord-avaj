@@ -2,14 +2,17 @@ package org.example.models;
 
 public class User {
     String username;
-    String password;
+    byte[] password;
+    byte[] salt;
     int roleId;
 
     public User(final String username,
-                final String password,
+                final byte[] password,
+                final byte[] salt,
                 final int roleId) {
         this.username = username;
         this.password = password;
+        this.salt = salt;
         this.roleId = roleId;
     }
 
@@ -21,12 +24,20 @@ public class User {
         this.username = username;
     }
 
-    public String getPassword() {
+    public byte[] getPassword() {
         return password;
     }
 
-    public void setPassword(final String password) {
+    public void setPassword(final byte[] password) {
         this.password = password;
+    }
+
+    public byte[] getSalt() {
+        return salt;
+    }
+
+    public void setSalt(final byte[] salt) {
+        this.salt = salt;
     }
 
     public int getRoleId() {

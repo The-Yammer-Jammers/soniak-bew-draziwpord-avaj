@@ -17,6 +17,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 import java.sql.SQLException;
 
 @Api("Auth API")
@@ -51,7 +53,9 @@ public class AuthController {
             return Response.ok()
                     .entity(authService.login(loginRequest))
                     .build();
-        } catch (SQLException e) {
+        } catch (SQLException
+                 | NoSuchAlgorithmException
+                 | InvalidKeySpecException e) {
             return Response.serverError()
                     .entity(e.getMessage())
                     .build();
@@ -75,7 +79,9 @@ public class AuthController {
             return Response
                     .noContent()
                     .build();
-        } catch (FailedToCreateException | SQLException e) {
+        } catch (FailedToCreateException
+                 | SQLException | NoSuchAlgorithmException
+                 | InvalidKeySpecException e) {
             return Response
                     .serverError()
                     .entity(e.getMessage())
