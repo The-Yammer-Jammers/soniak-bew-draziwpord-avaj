@@ -6,14 +6,17 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class RegisterRequest {
     String username;
     String password;
+    int roleId;
 
     @JsonCreator
     public RegisterRequest(
             @JsonProperty("username") final String username,
-            @JsonProperty("password") final String password
+            @JsonProperty("password") final String password,
+            @JsonProperty("roleName") final int roleId
     ) {
         this.username = username;
         this.password = password;
+        this.roleId = roleId;
     }
 
     public String getUsername() {
@@ -32,52 +35,11 @@ public class RegisterRequest {
         this.password = password;
     }
 
-    public static class OrderProduct {
-        private int orderId;
-        private int productId;
-        private String name;
-        private int quantity;
+    public int getRoleId() {
+        return roleId;
+    }
 
-        public OrderProduct(final int orderId,
-                            final int productId,
-                            final String name,
-                            final int quantity) {
-            this.orderId = orderId;
-            this.productId = productId;
-            this.name = name;
-            this.quantity = quantity;
-        }
-
-        public int getOrderId() {
-            return orderId;
-        }
-
-        public void setOrderId(final int orderId) {
-            this.orderId = orderId;
-        }
-
-        public int getProductId() {
-            return productId;
-        }
-
-        public void setProductId(final int productId) {
-            this.productId = productId;
-        }
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(final String name) {
-            this.name = name;
-        }
-
-        public int getQuantity() {
-            return quantity;
-        }
-
-        public void setQuantity(final int quantity) {
-            this.quantity = quantity;
-        }
+    public void setRoleId(final int roleId) {
+        this.roleId = roleId;
     }
 }

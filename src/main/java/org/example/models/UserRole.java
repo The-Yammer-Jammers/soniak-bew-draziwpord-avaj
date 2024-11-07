@@ -3,14 +3,16 @@ package org.example.models;
 import java.util.Map;
 
 public class UserRole {
-    public static final String ADMIN = "Admin";
-    public static final String USER = "User";
+    public static final String HR = "HR";
+    public static final String SALES = "Sales";
+    public static final String MANAGEMENT = "Management";
 
     private final int roleId;
 
     private static final Map<Integer, String> ROLES_MAP = Map.of(
-            1, ADMIN,
-            2, USER
+            1, HR,
+            2, SALES,
+            3, MANAGEMENT
     );
 
     public UserRole(final int roleId) {
