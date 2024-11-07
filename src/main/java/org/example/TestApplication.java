@@ -26,10 +26,12 @@ public class TestApplication extends Application<TestConfiguration> {
     public static void main(final String[] args) throws Exception {
         new TestApplication().run(args);
     }
+
     @Override
     public String getName() {
         return "Test";
     }
+
     @Override
     public void initialize(final Bootstrap<TestConfiguration> bootstrap) {
         bootstrap.addBundle(new SwaggerBundle<>() {
@@ -40,9 +42,20 @@ public class TestApplication extends Application<TestConfiguration> {
             }
         });
     }
+
     @Override
     public void run(final TestConfiguration configuration,
                     final Environment environment) {
+        AuthService authService = initialiseAuthService(environment);
+
+        environment.jersey()
+                .register(new TestController(new TestService(new TestDao())));
+
+        environment.jersey()
+                .register(new AuthController(authService));
+    }
+
+    AuthService initialiseAuthService(final Environment environment) {
         Key jwtKey = Jwts.SIG.HS256.key().build();
 
         environment.jersey().register(new AuthDynamicFeature(
@@ -58,12 +71,6 @@ public class TestApplication extends Application<TestConfiguration> {
                 new AuthValueFactoryProvider.Binder<>(JwtToken.class)
         );
 
-        environment.jersey()
-                .register(new TestController(new TestService(new TestDao())));
-
-        environment.jersey()
-                .register(new AuthController(new AuthService(
-                        new AuthDao(), jwtKey)));
+        return new AuthService(new AuthDao(), jwtKey);
     }
-
 }
