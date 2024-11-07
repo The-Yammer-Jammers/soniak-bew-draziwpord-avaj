@@ -13,7 +13,9 @@ public class AuthDao {
     public User getUser(final LoginRequest loginRequest) throws SQLException {
         try (Connection connection = DatabaseConnector.getConnection()) {
             String query = "SELECT Username, Password, RoleID "
-                    + "FROM `User` WHERE Username = ? AND Password = ?;";
+                    + "FROM `User` WHERE BINARY Username = ? "
+                    + "AND BINARY Password = ?;";
+
             PreparedStatement statement = connection.prepareStatement(query);
 
             statement.setString(1, loginRequest.getUsername());
