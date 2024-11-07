@@ -82,7 +82,7 @@ public class DeliveryEmployeeController {
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(
+    public Response updateDeliveryEmployee(
             @PathParam("id") final int id,
             final DeliveryEmployeeRequest deliveryEmployeeRequest
     ) {
