@@ -5,13 +5,13 @@ import io.jsonwebtoken.Jwts;
 import org.example.models.JwtToken;
 import org.example.models.UserRole;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Optional;
 
 public class JwtAuthenticator implements Authenticator<String, JwtToken> {
-    Key key;
+    SecretKey key;
 
-    public JwtAuthenticator(final Key key) {
+    public JwtAuthenticator(final SecretKey key) {
         this.key = key;
     }
 
@@ -19,7 +19,7 @@ public class JwtAuthenticator implements Authenticator<String, JwtToken> {
     public Optional<JwtToken> authenticate(final String token) {
         try {
             Integer roleId = Jwts.parser()
-                    .setSigningKey(key)
+                    .verifyWith(key)
                     .build()
                     .parseSignedClaims(token)
                     .getPayload()

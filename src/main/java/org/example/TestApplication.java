@@ -20,6 +20,7 @@ import org.example.services.AuthService;
 import org.example.services.TestService;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
+import javax.crypto.SecretKey;
 import java.security.Key;
 
 public class TestApplication extends Application<TestConfiguration> {
@@ -56,7 +57,7 @@ public class TestApplication extends Application<TestConfiguration> {
     }
 
     AuthService initialiseAuthService(final Environment environment) {
-        Key jwtKey = Jwts.SIG.HS256.key().build();
+        SecretKey jwtKey = Jwts.SIG.HS256.key().build();
 
         environment.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<JwtToken>()
