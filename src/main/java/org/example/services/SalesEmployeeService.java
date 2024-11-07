@@ -24,11 +24,10 @@ public class SalesEmployeeService {
         this.salesEmployeeDao = salesEmployeeDao;
     }
 
-    public List<SalesEmployeeResponse> getAllSalesEmployees() throws
+    public List<SalesEmployeeResponse> getSalesEmployees() throws
             SQLException {
-        return SalesEmployeeMapper
-                .mapSalesEmployeeListToSalesEmployeeResponseList(
-                salesEmployeeDao.getAllSalesEmployees());
+        return SalesEmployeeMapper.toResponseList(
+                salesEmployeeDao.getSalesEmployees());
     }
 
     public SalesEmployee getSalesEmployeeByID(final int id) throws SQLException,
@@ -69,7 +68,8 @@ public class SalesEmployeeService {
         salesEmployeeDao.deleteSalesEmployee(id);
     }
 
-    public void checkForNull(final SalesEmployee salesEmployee) throws DoesNotExistException {
+    public void checkForNull(final SalesEmployee salesEmployee)
+            throws DoesNotExistException {
         if (salesEmployee == null) {
             throw new DoesNotExistException(Entity.SALES_EMPLOYEE);
         }

@@ -34,7 +34,7 @@ public class SalesEmployeeController {
     public Response getSalesEmployees() {
         try {
             List<SalesEmployeeResponse> emps = salesEmployeeService
-                    .getAllSalesEmployees();
+                    .getSalesEmployees();
 
             return Response.ok().entity(emps).build();
         } catch (SQLException e) {

@@ -7,9 +7,10 @@ public class EmployeeRequest {
     private String firstName;
     private String lastName;
     private double salary;
-    String bankAccountNumber;
-    String nationalInsuranceNumber;
+    private String bankAccountNumber;
+    private String nationalInsuranceNumber;
     @JsonCreator
+    public EmployeeRequest() { }
     public EmployeeRequest(
             final @JsonProperty("firstName") String firstName,
             final @JsonProperty("lastName")String lastName,

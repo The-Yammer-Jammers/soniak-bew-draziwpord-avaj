@@ -5,12 +5,13 @@ public class EmployeeResponse {
     private String firstName;
     private String lastName;
     private double salary;
-    String bankAccountNumber;
-    String nationalInsuranceNumber;
+    private String bankAccountNumber;
+    private String nationalInsuranceNumber;
     public EmployeeResponse(final int employeeId, final String firstName,
                            final String lastName, final double salary,
                            final String bankAccountNumber,
                            final String nationalInsuranceNumber) {
+        this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
