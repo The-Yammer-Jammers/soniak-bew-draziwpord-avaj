@@ -39,11 +39,17 @@ public class AuthDao {
             throws SQLException {
         try (Connection connection = DatabaseConnector.getConnection()) {
             String query = "INSERT INTO `User` (Username, Password, RoleID) "
-                    + "VALUES (?, ?, 2);";
+                    + "VALUES (?, ?, ?);";
+
+            final int usernameParam = 1;
+            final int passwordParam = 2;
+            final int roleIdParam = 3;
 
             PreparedStatement statement = connection.prepareStatement(query);
-            statement.setString(1, registerRequest.getUsername());
-            statement.setString(2, registerRequest.getPassword());
+
+            statement.setString(usernameParam, registerRequest.getUsername());
+            statement.setString(passwordParam, registerRequest.getPassword());
+            statement.setInt(roleIdParam, registerRequest.getRoleId());
 
             int result = statement.executeUpdate();
             return result > 0;
