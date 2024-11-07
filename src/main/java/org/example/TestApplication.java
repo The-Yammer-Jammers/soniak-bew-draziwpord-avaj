@@ -21,7 +21,6 @@ import org.example.services.TestService;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import javax.crypto.SecretKey;
-import java.security.Key;
 
 public class TestApplication extends Application<TestConfiguration> {
     public static void main(final String[] args) throws Exception {
