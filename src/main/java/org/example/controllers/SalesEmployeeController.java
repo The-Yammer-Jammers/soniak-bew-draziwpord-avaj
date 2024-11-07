@@ -99,7 +99,7 @@ public class SalesEmployeeController {
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response salesEmployeeService(final @PathParam("id") int id) {
+    public Response deleteSalesEmployee(final @PathParam("id") int id) {
         try {
             salesEmployeeService.deleteSalesEmployee(id);
             return Response.noContent().build();

@@ -4,58 +4,59 @@ import org.example.exceptions.InvalidException;
 import org.example.models.SalesEmployeeRequest;
 
 public class SalesEmployeeValidator {
+    static final int MAXIMUM_COMMISSION_RATE = 1;
+    static final int MAXIMUM_NAME_LENGTH = 50;
+    static final int MAXIMUM_BANK_ACCOUNT_NUMBER = 34;
+    static final int MAXIMUM_NATIONAL_INSURANCE_NUMBER_LENGTH = 9;
+    static final int MAXIMUM_SALARY = 15;
 
     public void validateSalesEmployee(
             final SalesEmployeeRequest salesEmployeeRequest)
         throws InvalidException {
-        final int maximumCommissionRate = 1;
-        final int maximumNameLength = 50;
-        final int maximumBankAccountNumberLength = 34;
-        final int maximumNationalInsuranceNumberLength = 9;
-        final int maximumSalaryLength = 15;
+
         if (salesEmployeeRequest.getCommissionRate()
-                >= maximumCommissionRate) {
+                >= MAXIMUM_COMMISSION_RATE) {
             throw new InvalidException(
-                    Entity.SALESEMPLOYEE,
+                    Entity.SALES_EMPLOYEE,
                     "Commission must not be greater than one"
             );
         }
         if (salesEmployeeRequest.getFirstName()
-                .length() > maximumNameLength) {
+                .length() > MAXIMUM_NAME_LENGTH) {
             throw new InvalidException(
-                    Entity.SALESEMPLOYEE,
+                    Entity.SALES_EMPLOYEE,
                     "First name cannot be greater"
                     + " than 50 characters"
             );
         }
         if (salesEmployeeRequest.getLastName()
-                .length() > maximumNameLength) {
+                .length() > MAXIMUM_NAME_LENGTH) {
             throw new InvalidException(
-                    Entity.SALESEMPLOYEE,
+                    Entity.SALES_EMPLOYEE,
                     "Last name cannot be greater"
                     + " than 50 characters");
         }
         if (salesEmployeeRequest.getBankAccountNumber()
                 .length()
-                > maximumBankAccountNumberLength) {
+                > MAXIMUM_BANK_ACCOUNT_NUMBER) {
             throw new InvalidException(
-                    Entity.SALESEMPLOYEE,
+                    Entity.SALES_EMPLOYEE,
                     "Bank Account Number cannot be greater"
                     + " than 34 characters");
         }
         if (salesEmployeeRequest.getNationalInsuranceNumber()
                 .length()
-                > maximumNationalInsuranceNumberLength) {
+                > MAXIMUM_NATIONAL_INSURANCE_NUMBER_LENGTH) {
             throw new InvalidException(
-                    Entity.SALESEMPLOYEE,
+                    Entity.SALES_EMPLOYEE,
                     "National Insurance Number"
                     + " cannot be greater"
                     + " than 9 characters");
         }
         if (Double.toString(salesEmployeeRequest.getSalary())
-                .length() > maximumSalaryLength) {
+                .length() > MAXIMUM_SALARY) {
                 throw new InvalidException(
-                        Entity.SALESEMPLOYEE,
+                        Entity.SALES_EMPLOYEE,
                         "Salary cannot be greater than 15 digits long"
                 );
         }

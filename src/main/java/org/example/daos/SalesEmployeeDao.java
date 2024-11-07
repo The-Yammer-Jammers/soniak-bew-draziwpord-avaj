@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SalesEmployeeDao {
-    final int parameterOne = 1;
-    final int parameterTwo = 2;
-    final int parameterThree = 3;
-    final int parameterFour = 4;
-    final int parameterFive = 5;
-    final int parameterSix = 6;
+    static final int STATEMENT_PARAMETER_ONE = 1;
+    static final int STATEMENT_PARAMETER_TWO = 2;
+    static final int STATEMENT_PARAMETER_THREE = 3;
+    static final int STATEMENT_PARAMETER_FOUR = 4;
+    static final int STATEMENT_PARAMETER_FIVE = 5;
+    static final int STATEMENT_PARAMETER_SIX = 6;
     public List<SalesEmployee> getAllSalesEmployees() throws SQLException {
         List<SalesEmployee> salesEmployees = new ArrayList<>();
         try (Connection connection = DatabaseConnector.getConnection()) {
@@ -31,15 +31,8 @@ public class SalesEmployeeDao {
                             + "SalesEmployee.employeeId");
 
             while (resultSet.next()) {
-                SalesEmployee salesEmployee = new SalesEmployee(
-                        resultSet.getInt("Employee.employeeId"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getDouble("salary"),
-                        resultSet.getString("bankAccountNumber"),
-                        resultSet.getString("nationalInsuranceNumber"),
-                        resultSet.getDouble("commissionRate")
-                );
+                SalesEmployee salesEmployee =
+                        getSalesEmployeeResultSet(resultSet);
 
                 salesEmployees.add(salesEmployee);
             }
@@ -63,15 +56,7 @@ public class SalesEmployeeDao {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                return new SalesEmployee(
-                        resultSet.getInt("Employee.employeeId"),
-                        resultSet.getString("firstName"),
-                        resultSet.getString("lastName"),
-                        resultSet.getDouble("salary"),
-                        resultSet.getString("bankAccountNumber"),
-                        resultSet.getString("nationalInsuranceNumber"),
-                        resultSet.getDouble("commissionRate")
-                );
+                return getSalesEmployeeResultSet(resultSet);
 
             }
         }
@@ -79,75 +64,89 @@ public class SalesEmployeeDao {
     }
     public int createSalesEmployee(final SalesEmployeeRequest
                                            salesEmployee) throws SQLException {
-        Connection c = DatabaseConnector.getConnection();
-        String insertStatement = "INSERT INTO Employee(firstName, lastName, "
-                + "salary, bankAccountNumber, nationalInsuranceNumber)"
-                + " VALUES(?,?,?,?,?);";
-        PreparedStatement st = c.prepareStatement(insertStatement,
-                Statement.RETURN_GENERATED_KEYS);
-        st.setString(parameterOne, salesEmployee.getFirstName());
-        st.setString(parameterTwo, salesEmployee.getLastName());
-        st.setDouble(parameterThree, salesEmployee.getSalary());
-        st.setString(parameterFour, salesEmployee.getBankAccountNumber());
-        st.setString(parameterFive,
-                salesEmployee.getNationalInsuranceNumber());
-        st.executeUpdate();
+        try (Connection c = DatabaseConnector.getConnection();) {
+            String insertStatement = "INSERT INTO Employee(firstName, lastName,"
+                    + " salary, bankAccountNumber, nationalInsuranceNumber)"
+                    + " VALUES(?,?,?,?,?);";
+            PreparedStatement st = c.prepareStatement(insertStatement,
+                    Statement.RETURN_GENERATED_KEYS);
+            st.setString(STATEMENT_PARAMETER_ONE, salesEmployee.getFirstName());
+            st.setString(STATEMENT_PARAMETER_TWO, salesEmployee.getLastName());
+            st.setDouble(STATEMENT_PARAMETER_THREE, salesEmployee.getSalary());
+            st.setString(STATEMENT_PARAMETER_FOUR,
+                    salesEmployee.getBankAccountNumber());
+            st.setString(STATEMENT_PARAMETER_FIVE,
+                    salesEmployee.getNationalInsuranceNumber());
+            st.executeUpdate();
 
-        ResultSet rs = st.getGeneratedKeys();
-        if (rs.next()) {
-            int employeeId = rs.getInt(1);
+            ResultSet rs = st.getGeneratedKeys();
+            if (rs.next()) {
+                int employeeId = rs.getInt(1);
 
-            insertStatement = "INSERT INTO SalesEmployee(employeeId, "
-                    + "CommissionRate) VALUES(?,?)";
+                insertStatement = "INSERT INTO SalesEmployee(employeeId, "
+                        + "CommissionRate) VALUES(?,?)";
 
-            PreparedStatement st2 = c.prepareStatement(insertStatement);
-            st2.setInt(parameterOne, employeeId);
-            st2.setDouble(parameterTwo, salesEmployee.getCommissionRate());
-            int rowsUpdated = st2.executeUpdate();
+                PreparedStatement st2 = c.prepareStatement(insertStatement);
+                st2.setInt(STATEMENT_PARAMETER_ONE, employeeId);
+                st2.setDouble(STATEMENT_PARAMETER_TWO,
+                        salesEmployee.getCommissionRate());
+                int rowsUpdated = st2.executeUpdate();
 
-            if (rowsUpdated == 1) {
-                return employeeId;
+                if (rowsUpdated == 1) {
+                    return employeeId;
+                }
             }
+
+            return -1;
         }
 
-        return -1;
+
     }
     public void updateSalesEmployee(final int id,
                                     final SalesEmployeeRequest salesEmployee)
             throws SQLException {
-        Connection c = DatabaseConnector.getConnection();
-        String updateStatement = "UPDATE Employee SET firstName=?,"
-                + "lastName=?,salary=?,"
-                + "bankAccountNumber=?,nationalInsuranceNumber=?"
-                + "WHERE employeeId = ?;";
-        PreparedStatement st = c.prepareStatement(updateStatement);
-        st.setString(parameterOne, salesEmployee.getFirstName());
-        st.setString(parameterTwo, salesEmployee.getLastName());
-        st.setDouble(parameterThree, salesEmployee.getSalary());
-        st.setString(parameterFour, salesEmployee.getBankAccountNumber());
-        st.setString(parameterFive, salesEmployee.getNationalInsuranceNumber());
-        st.setInt(parameterSix, id);
-        st.executeUpdate();
-        updateStatement = "UPDATE SalesEmployee"
-                + " SET commissionRate=?"
-                + " WHERE employeeId = ?;";
-        PreparedStatement st2 = c.prepareStatement(updateStatement);
-         st2.setDouble(parameterOne, salesEmployee.getCommissionRate());
-         st2.setInt(parameterTwo, id);
-         st2.executeUpdate();
+        try (Connection c = DatabaseConnector.getConnection();) {
+            String updateStatement = "UPDATE Employee SET firstName=?,"
+                    + "lastName=?,salary=?,"
+                    + "bankAccountNumber=?,nationalInsuranceNumber=?"
+                    + "WHERE employeeId = ?;";
+            PreparedStatement st = c.prepareStatement(updateStatement);
+            st.setString(STATEMENT_PARAMETER_ONE, salesEmployee.getFirstName());
+            st.setString(STATEMENT_PARAMETER_TWO, salesEmployee.getLastName());
+            st.setDouble(STATEMENT_PARAMETER_THREE, salesEmployee.getSalary());
+            st.setString(STATEMENT_PARAMETER_FOUR,
+                    salesEmployee.getBankAccountNumber());
+            st.setString(STATEMENT_PARAMETER_FIVE,
+                    salesEmployee.getNationalInsuranceNumber());
+            st.setInt(STATEMENT_PARAMETER_SIX, id);
+            st.executeUpdate();
+            updateStatement = "UPDATE SalesEmployee"
+                    + " SET commissionRate=?"
+                    + " WHERE employeeId = ?;";
+            PreparedStatement st2 = c.prepareStatement(updateStatement);
+            st2.setDouble(STATEMENT_PARAMETER_ONE,
+                    salesEmployee.getCommissionRate());
+            st2.setInt(STATEMENT_PARAMETER_TWO, id);
+            st2.executeUpdate();
+        }
     }
-    public void deleteProduct(final int id) throws SQLException {
+    public void deleteSalesEmployee(final int id) throws SQLException {
         Connection c = DatabaseConnector.getConnection();
         String deleteStatement = "DELETE FROM "
                 + "SalesEmployee WHERE EmployeeId = ?";
         PreparedStatement st = c.prepareStatement(deleteStatement);
-        st.setInt(parameterOne, id);
+        st.setInt(STATEMENT_PARAMETER_ONE, id);
         st.executeUpdate();
         deleteStatement = "DELETE FROM "
                 + "Employee WHERE EmployeeId = ?";
         PreparedStatement st2 = c.prepareStatement(deleteStatement);
-        st2.setInt(parameterOne, id);
+        st2.setInt(STATEMENT_PARAMETER_ONE, id);
         st2.executeUpdate();
+    }
+
+    public SalesEmployee getSalesEmployeeResultSet(
+            final ResultSet resultSet) throws SQLException {
+        return getSalesEmployeeResultSet(resultSet);
     }
 
 }

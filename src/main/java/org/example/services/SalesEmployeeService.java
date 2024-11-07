@@ -34,9 +34,7 @@ public class SalesEmployeeService {
     public SalesEmployee getSalesEmployeeByID(final int id) throws SQLException,
             DoesNotExistException {
         SalesEmployee salesEmployee = salesEmployeeDao.getSalesEmployeeById(id);
-        if (salesEmployee == null) {
-            throw new DoesNotExistException(Entity.SALESEMPLOYEE);
-        }
+        checkForNull(salesEmployee);
         return salesEmployee;
     }
     public int createSalesEmployee(
@@ -46,7 +44,7 @@ public class SalesEmployeeService {
         int id = salesEmployeeDao.createSalesEmployee(salesEmployeeRequest);
 
         if (id == -1) {
-            throw new FailedToCreateException(Entity.SALESEMPLOYEE);
+            throw new FailedToCreateException(Entity.SALES_EMPLOYEE);
         }
 
         return  id;
@@ -58,11 +56,7 @@ public class SalesEmployeeService {
                 salesEmployeeRequest);
         SalesEmployee salesEmployeeToUpdate =
                 salesEmployeeDao.getSalesEmployeeById(id);
-        System.out.println(id);
-        System.out.println(salesEmployeeToUpdate);
-        if (salesEmployeeToUpdate == null) {
-            throw new DoesNotExistException(Entity.SALESEMPLOYEE);
-        }
+        checkForNull(salesEmployeeToUpdate);
 
         salesEmployeeDao.updateSalesEmployee(id, salesEmployeeRequest);
     }
@@ -71,9 +65,13 @@ public class SalesEmployeeService {
             final int id) throws SQLException, DoesNotExistException {
         SalesEmployee salesEmployeeToUpdate =
                 salesEmployeeDao.getSalesEmployeeById(id);
-        if (salesEmployeeToUpdate == null) {
-            throw new DoesNotExistException(Entity.SALESEMPLOYEE);
+        checkForNull(salesEmployeeToUpdate);
+        salesEmployeeDao.deleteSalesEmployee(id);
+    }
+
+    public void checkForNull(final SalesEmployee salesEmployee) throws DoesNotExistException {
+        if (salesEmployee == null) {
+            throw new DoesNotExistException(Entity.SALES_EMPLOYEE);
         }
-        salesEmployeeDao.deleteProduct(id);
     }
 }
