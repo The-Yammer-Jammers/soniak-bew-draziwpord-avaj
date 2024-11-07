@@ -181,9 +181,7 @@ public class DeliveryEmployeeDao {
         pstDeliveryEmployee.setInt(1, id);
         pstDeliveryEmployee.executeUpdate();
 
-        String statement = "DELETE FROM Employee "
-                + "WHERE employeeId IN (SELECT employeeId "
-                + "FROM DeliveryEmployee WHERE employeeId=(?));";
+        String statement = "DELETE FROM Employee WHERE employeeId = (?)";
         PreparedStatement pst = conn.prepareStatement(statement);
         pst.setInt(1, id);
         pst.executeUpdate();
