@@ -9,7 +9,7 @@ public class ProjectRequest {
     private String name;
     private double projectValue;
     private int clientId;
-    private int salesEmployeeId;
+    private int deliveryEmployeeId;
     private int techLeadId;
     private boolean completed;
 
@@ -19,14 +19,14 @@ public class ProjectRequest {
             @JsonProperty("name") final String name,
             @JsonProperty("projectValue") final double projectValue,
             @JsonProperty("clientId") final int clientId,
-            @JsonProperty("salesEmployeeId") final int salesEmployeeId,
+            @JsonProperty("deliveryEmployeeId") final int deliveryEmployeeId,
             @JsonProperty("techLeadId") final int techLeadId,
             @JsonProperty("completed") final boolean completed) {
         this.projectId = projectId;
         this.name = name;
         this.projectValue = projectValue;
         this.clientId = clientId;
-        this.salesEmployeeId = salesEmployeeId;
+        this.deliveryEmployeeId = deliveryEmployeeId;
         this.techLeadId = techLeadId;
         this.completed = completed;
     }
@@ -63,12 +63,12 @@ public class ProjectRequest {
         this.clientId = clientId;
     }
 
-    public int getSalesEmployeeId() {
-        return salesEmployeeId;
+    public int getDeliveryEmployeeId() {
+        return deliveryEmployeeId;
     }
 
-    public void setSalesEmployeeId(final int salesEmployeeId) {
-        this.salesEmployeeId = salesEmployeeId;
+    public void setDeliveryEmployeeId(final int deliveryEmployeeId) {
+        this.deliveryEmployeeId = deliveryEmployeeId;
     }
 
     public int getTechLeadId() {
@@ -83,8 +83,7 @@ public class ProjectRequest {
         return completed;
     }
 
-    public boolean setCompleted(final boolean completed) {
+    public void setCompleted(final boolean completed) {
         this.completed = completed;
-        return completed;
     }
 }

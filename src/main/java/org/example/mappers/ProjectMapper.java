@@ -16,7 +16,7 @@ public class ProjectMapper {
                         project.getName(),
                         project.getProjectValue(),
                         project.getClientId(),
-                        project.getSalesEmployeeId(),
+                        project.getDeliveryEmployeeId(),
                         project.getTechLeadId(),
                         project.getCompleted()))
                 .collect(Collectors.toList());

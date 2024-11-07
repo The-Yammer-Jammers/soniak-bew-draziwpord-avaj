@@ -6,16 +6,16 @@ public class ProjectResponse {
     private String name;
     private double projectValue;
     private int clientId;
-    private int salesEmployeeId;
+    private int deliveryEmployeeId;
     private int techLeadId;
     private boolean completed;
 
-    public ProjectResponse(final int projectId, final String name, final double projectValue, final int clientId, final int salesEmployeeId, final int techLeadId, final boolean completed) {
+    public ProjectResponse(final int projectId, final String name, final double projectValue, final int clientId, final int deliveryEmployeeId, final int techLeadId, final boolean completed) {
         this.projectId = projectId;
         this.name = name;
         this.projectValue = projectValue;
         this.clientId = clientId;
-        this.salesEmployeeId = salesEmployeeId;
+        this.deliveryEmployeeId = deliveryEmployeeId;
         this.techLeadId = techLeadId;
         this.completed = completed;
     }
@@ -52,12 +52,12 @@ public class ProjectResponse {
         this.clientId = clientId;
     }
 
-    public int getSalesEmployeeId() {
-        return salesEmployeeId;
+    public int getDeliveryEmployeeId() {
+        return deliveryEmployeeId;
     }
 
-    public void setSalesEmployeeId(final int salesEmployeeId) {
-        this.salesEmployeeId = salesEmployeeId;
+    public void setDeliveryEmployeeId(final int deliveryEmployeeId) {
+        this.deliveryEmployeeId = deliveryEmployeeId;
     }
 
     public int getTechLeadId() {
@@ -72,8 +72,7 @@ public class ProjectResponse {
         return completed;
     }
 
-    public boolean setCompleted(final boolean completed) {
+    public void setCompleted(final boolean completed) {
         this.completed = completed;
-        return completed;
     }
 }
