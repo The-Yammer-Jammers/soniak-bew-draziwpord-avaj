@@ -1,11 +1,13 @@
 package org.example.models;
 
+import java.util.List;
+
 public class Project {
     private int projectId;
     private String name;
     private double projectValue;
     private int clientId;
-    private int deliveryEmployeeId;
+    private List<Integer> deliveryEmployeeId;
     private int techLeadId;
     private boolean completed;
 
@@ -13,7 +15,7 @@ public class Project {
                    final String name,
                    final double projectValue,
                    final int clientId,
-                   final int deliveryEmployeeId,
+                   final List<Integer> deliveryEmployeeId,
                    final int techLeadId,
                    final boolean completed) {
         this.projectId = projectId;
@@ -57,13 +59,6 @@ public class Project {
         this.clientId = clientId;
     }
 
-    public int getDeliveryEmployeeId() {
-        return deliveryEmployeeId;
-    }
-
-    public void setDeliveryEmployeeId(final int deliveryEmployeeId) {
-        this.deliveryEmployeeId = deliveryEmployeeId;
-    }
     public int getTechLeadId() {
         return techLeadId;
     }
@@ -80,4 +75,11 @@ public class Project {
         this.completed = completed;
     }
 
+    public List<Integer> getDeliveryEmployeeId() {
+        return deliveryEmployeeId;
+    }
+
+    public void setDeliveryEmployeeId(final List<Integer> deliveryEmployeeId) {
+        this.deliveryEmployeeId = deliveryEmployeeId;
+    }
 }

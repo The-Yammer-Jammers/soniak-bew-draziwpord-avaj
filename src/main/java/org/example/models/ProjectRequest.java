@@ -11,6 +11,7 @@ public class ProjectRequest {
     private int clientId;
     private int deliveryEmployeeId;
     private int techLeadId;
+    private int salesEmployeeId;
     private boolean completed;
 
     @JsonCreator
@@ -28,6 +29,7 @@ public class ProjectRequest {
         this.clientId = clientId;
         this.deliveryEmployeeId = deliveryEmployeeId;
         this.techLeadId = techLeadId;
+        this.salesEmployeeId = salesEmployeeId;
         this.completed = completed;
     }
 
@@ -77,6 +79,14 @@ public class ProjectRequest {
 
     public void setTechLeadId(final int techLeadId) {
         this.techLeadId = techLeadId;
+    }
+
+    public int getSalesEmployeeId() {
+        return salesEmployeeId;
+    }
+
+    public void setSalesEmployeeId(final int salesEmployeeId) {
+        this.salesEmployeeId = salesEmployeeId;
     }
 
     public boolean getCompleted() {
