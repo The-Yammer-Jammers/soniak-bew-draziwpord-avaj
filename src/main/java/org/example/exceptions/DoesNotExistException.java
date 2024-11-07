@@ -1,7 +1,7 @@
 package org.example.exceptions;
 
-public class DoesNotExistException extends RuntimeException {
-    public DoesNotExistException(final Entity entity, final String reason) {
-        super(entity.getName() + " does not exist because, " + reason);
+public class DoesNotExistException extends Throwable {
+    public DoesNotExistException(final Entity entity) {
+        super(entity.getEntity() + " Does not exist");
     }
 }

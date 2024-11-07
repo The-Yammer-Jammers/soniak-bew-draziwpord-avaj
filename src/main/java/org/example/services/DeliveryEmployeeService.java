@@ -4,6 +4,7 @@ import org.example.daos.DeliveryEmployeeDao;
 import org.example.exceptions.DoesNotExistException;
 import org.example.exceptions.Entity;
 import org.example.exceptions.FailedToCreateException;
+import org.example.exceptions.InvalidException;
 import org.example.models.DeliveryEmployee;
 import org.example.models.DeliveryEmployeeCreateRequest;
 import org.example.models.DeliveryEmployeeRequest;
@@ -34,15 +35,14 @@ public class DeliveryEmployeeService {
     }
 
     public DeliveryEmployee getDeliveryEmployeeById(final int id)
-            throws SQLException {
+            throws SQLException, DoesNotExistException {
 
         DeliveryEmployee deliveryEmployee = deliveryEmployeeDao
                 .getDeliveryEmployeeById(id);
 
         if (deliveryEmployee == null) {
             throw new DoesNotExistException(
-                    Entity.DELIVERY_EMPLOYEE,
-                    "delivery employee does not exist."
+                    Entity.DELIVERY_EMPLOYEE
             );
         }
 
@@ -55,8 +55,7 @@ public class DeliveryEmployeeService {
                 deliveryEmployeeDao.getDeliveryEmployeeById(id);
         if (deliveryEmployee == null) {
             throw new DoesNotExistException(
-                    Entity.DELIVERY_EMPLOYEE,
-                    "delivery employee does not exist"
+                    Entity.DELIVERY_EMPLOYEE
             );
         }
         deliveryEmployeeDao.deleteDeliveryEmployee(id);
@@ -65,7 +64,7 @@ public class DeliveryEmployeeService {
     public int createDeliveryEmployee(
             final DeliveryEmployeeCreateRequest deliveryEmployeeCreateRequest
     )
-            throws SQLException {
+            throws SQLException, FailedToCreateException, InvalidException {
         createValidator.validateDeliveryEmployee(deliveryEmployeeCreateRequest);
 
         int id = deliveryEmployeeDao.createDeliveryEmployee(
@@ -74,7 +73,7 @@ public class DeliveryEmployeeService {
 
         if (id == -1) {
             throw new FailedToCreateException(
-                    Entity.DELIVERY_EMPLOYEE, "something went wrong."
+                    Entity.DELIVERY_EMPLOYEE
             );
         }
 
@@ -84,7 +83,7 @@ public class DeliveryEmployeeService {
     public void updateDeliveryEmployee(
             final int id, final DeliveryEmployeeRequest deliveryEmployeeRequest
     )
-            throws SQLException {
+            throws SQLException, DoesNotExistException, InvalidException {
         validator.validateDeliveryEmployee(deliveryEmployeeRequest);
 
         DeliveryEmployee deliveryEmployeeToUpdate = deliveryEmployeeDao
@@ -92,8 +91,7 @@ public class DeliveryEmployeeService {
 
         if (deliveryEmployeeToUpdate == null) {
             throw new DoesNotExistException(
-                    Entity.DELIVERY_EMPLOYEE,
-                    "delivery employee does not exist."
+                    Entity.DELIVERY_EMPLOYEE
             );
         }
 

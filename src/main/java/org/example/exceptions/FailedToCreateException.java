@@ -1,7 +1,7 @@
 package org.example.exceptions;
 
-public class FailedToCreateException extends RuntimeException {
-    public FailedToCreateException(final Entity entity, final String reason) {
-        super(entity.getName() + " could not be created because, " + reason);
+public class FailedToCreateException extends Exception {
+    public FailedToCreateException(final Entity entity) {
+        super("Failed to create " + entity.getEntity());
     }
 }

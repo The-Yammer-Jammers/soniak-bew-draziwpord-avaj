@@ -55,9 +55,6 @@ public class DeliveryEmployeeController {
         } catch (SQLException e) {
             return Response.status(Response.Status.BAD_REQUEST)
                     .entity(e.getMessage()).build();
-        } catch (DoesNotExistException e) {
-            return Response.status(Response.Status.NOT_FOUND)
-                    .entity(e.getMessage()).build();
         }
     }
 
