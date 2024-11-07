@@ -8,13 +8,15 @@ import java.util.stream.Collectors;
 
 public final class SalesEmployeeMapper {
     private SalesEmployeeMapper() { }
-    public static List<SalesEmployeeResponse> toResponseList(final List<SalesEmployee> salesEmployees) {
+    public static List<SalesEmployeeResponse> toResponseList(
+            final List<SalesEmployee> salesEmployees) {
         return salesEmployees
                 .stream().map(SalesEmployeeMapper::toResponse)
                 .collect(Collectors.toList());
     }
 
-    public static SalesEmployeeResponse toResponse(final SalesEmployee salesEmployee) {
+    public static SalesEmployeeResponse toResponse(
+            final SalesEmployee salesEmployee) {
         return new SalesEmployeeResponse(
                 salesEmployee.getEmployeeId(),
                 salesEmployee.getFirstName(),
