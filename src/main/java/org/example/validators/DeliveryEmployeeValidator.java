@@ -6,17 +6,18 @@ import org.example.models.DeliveryEmployeeRequest;
 
 public class DeliveryEmployeeValidator {
 
+    private static final int MAX_NAME_CHARACTER_LENGTH = 25;
+    private static final int BANK_ACCOUNT_NUMBER_LENGTH = 8;
+
     public void validateDeliveryEmployee(
             final DeliveryEmployeeRequest deliveryEmployeeRequest
     ) throws InvalidException {
-        final int maxNameCharacterLength = 25;
-        final int bankAccountNumberLength = 8;
 
         if (deliveryEmployeeRequest.getFirstName().length()
-                > maxNameCharacterLength
+                > MAX_NAME_CHARACTER_LENGTH
                 ||
                 deliveryEmployeeRequest.getLastName().length()
-                        > maxNameCharacterLength
+                        > MAX_NAME_CHARACTER_LENGTH
         ) {
             throw new InvalidException(Entity.DELIVERY_EMPLOYEE,
                     "name is greater than 25 characters."
@@ -24,7 +25,7 @@ public class DeliveryEmployeeValidator {
         }
 
         if (deliveryEmployeeRequest.getBankAccountNumber().length()
-                != bankAccountNumberLength
+                != BANK_ACCOUNT_NUMBER_LENGTH
         ) {
             throw new InvalidException(Entity.DELIVERY_EMPLOYEE,
                     "bank account number is not 8 numbers."
