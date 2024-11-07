@@ -29,7 +29,13 @@ public class ProjectDao {
             Statement statement = connection.createStatement();
 
             ResultSet resultSet = statement.executeQuery(
-                    "SELECT projectId, name, projectValue, clientId, techLeadId, salesEmployeeId, completed "
+                    "SELECT projectId,"
+                            + "name,"
+                            + "projectValue,"
+                            + "clientId,"
+                            + "techLeadId,"
+                            + "salesEmployeeId,"
+                            + "completed "
                             + "FROM Project"
             );
 
