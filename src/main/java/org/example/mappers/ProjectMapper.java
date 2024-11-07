@@ -19,7 +19,7 @@ public final class ProjectMapper {
                         project.getClientId(),
                         project.getDeliveryEmployeeId(),
                         project.getTechLeadId(),
-                        project.getCompleted()))
+                        project.getIsCompleted()))
                 .collect(Collectors.toList());
     }
 }

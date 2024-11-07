@@ -9,7 +9,7 @@ public class Project {
     private int clientId;
     private List<Integer> deliveryEmployeeId;
     private int techLeadId;
-    private boolean completed;
+    private boolean isCompleted;
 
     public Project(final int projectId,
                    final String name,
@@ -17,14 +17,14 @@ public class Project {
                    final int clientId,
                    final List<Integer> deliveryEmployeeId,
                    final int techLeadId,
-                   final boolean completed) {
+                   final boolean isCompleted) {
         this.projectId = projectId;
         this.name = name;
         this.projectValue = projectValue;
         this.clientId = clientId;
         this.deliveryEmployeeId = deliveryEmployeeId;
         this.techLeadId = techLeadId;
-        this.completed = completed;
+        this.isCompleted = isCompleted;
     }
 
     public int getProjectId() {
@@ -67,12 +67,12 @@ public class Project {
         this.techLeadId = techLeadId;
     }
 
-    public boolean getCompleted() {
-        return completed;
+    public boolean getIsCompleted() {
+        return isCompleted;
     }
 
-    public void setCompleted(final boolean completed) {
-        this.completed = completed;
+    public void setIsCompleted(final boolean isCompleted) {
+        this.isCompleted = isCompleted;
     }
 
     public List<Integer> getDeliveryEmployeeId() {

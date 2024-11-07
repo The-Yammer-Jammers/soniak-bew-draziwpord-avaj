@@ -51,15 +51,10 @@ public class ProjectDao {
                             deliveryResultSet.getInt("deliveryEmployeeId");
                     deliveryEmployees.add(deliveryEmployeeId);
                 }
-
-                Project project = new Project(
-                        projectId,
-                        resultSet.getString("name"),
-                        resultSet.getDouble("projectValue"),
-                        resultSet.getInt("clientId"),
-                        deliveryEmployees,
-                        resultSet.getInt("techLeadId"),
-                        resultSet.getBoolean("completed"));
+///
+                Project project = projectValues(projectId,
+                        resultSet,
+                        deliveryEmployees);
                 projects.add(project);
             }
         }
@@ -107,14 +102,9 @@ public class ProjectDao {
                             deliveryResultSet.getInt("deliveryEmployeeId");
                     deliveryEmployees.add(deliveryEmployeeId);
                 }
-                return new Project(
-                        projectId,
-                        projectIdResultSet.getString("name"),
-                        projectIdResultSet.getDouble("projectValue"),
-                        projectIdResultSet.getInt("clientId"),
-                        deliveryEmployees,
-                        projectIdResultSet.getInt("techLeadId"),
-                        projectIdResultSet.getBoolean("completed"));
+                return projectValues(projectId,
+                        projectIdResultSet,
+                        deliveryEmployees);
             }
         }
         return null;
@@ -123,51 +113,75 @@ public class ProjectDao {
     public void updateProject(final int projectId,
                               final ProjectRequest projectRequest)
             throws SQLException {
-        Connection connection = DatabaseConnector.getConnection();
+        try (Connection connection = DatabaseConnector.getConnection()) {
 
-        String updateStatement =
-                "UPDATE Project SET completed = ? WHERE projectId = ?";
+            String updateStatement =
+                    "UPDATE Project SET completed = ? WHERE projectId = ?";
 
-        PreparedStatement statement =
-                connection.prepareStatement(updateStatement);
-        statement.setBoolean(1, projectRequest.getCompleted());
-        statement.setInt(2, projectId);
+            PreparedStatement statement =
+                    connection.prepareStatement(updateStatement);
+            statement.setBoolean(1, projectRequest.getCompleted());
+            statement.setInt(2, projectId);
 
-        statement.executeUpdate();
+            statement.executeUpdate();
+        }
     }
 
     public int createProject(final ProjectRequest projectRequest)
             throws SQLException {
-        Connection c = DatabaseConnector.getConnection();
-        String selectStatement =
-                "INSERT INTO Project(name,"
-                        + "projectValue,"
-                        + "clientId,"
-                        + "techLeadId,"
-                        + "salesEmployeeId) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement st = c.prepareStatement(selectStatement,
-                Statement.RETURN_GENERATED_KEYS);
+         try (Connection c = DatabaseConnector.getConnection()) {
+             String selectStatement =
+                     "INSERT INTO Project(name,"
+                             + "projectValue,"
+                             + "clientId,"
+                             + "techLeadId,"
+                             + "salesEmployeeId) VALUES (?, ?, ?, ?, ?)";
+             PreparedStatement st = c.prepareStatement(selectStatement,
+                     Statement.RETURN_GENERATED_KEYS);
 
-        final int firstValue = 1;
-        final int secondValue = 2;
-        final int thirdValue = 3;
-        final int fourthValue = 4;
-        final int fifthValue = 5;
+             final int nameIndex = 1;
+             final int projectValueIndex = 2;
+             final int clientIdIndex = 3;
+             final int techLeadIdIndex = 4;
+             final int salesEmployeeIdIndex = 5;
 
-        st.setString(firstValue, projectRequest.getName());
-        st.setDouble(secondValue, projectRequest.getProjectValue());
-        st.setInt(thirdValue, projectRequest.getClientId());
-        st.setInt(fourthValue, projectRequest.getTechLeadId());
-        st.setInt(fifthValue, projectRequest.getSalesEmployeeId());
+             st.setString(nameIndex,
+                     projectRequest.getName());
+             st.setDouble(projectValueIndex,
+                     projectRequest.getProjectValue());
+             st.setInt(clientIdIndex,
+                     projectRequest.getClientId());
+             st.setInt(techLeadIdIndex,
+                     projectRequest.getTechLeadId());
+             st.setInt(salesEmployeeIdIndex,
+                     projectRequest.getSalesEmployeeId());
 
-        st.executeUpdate();
+             st.executeUpdate();
 
-        ResultSet rs = st.getGeneratedKeys();
+             ResultSet rs = st.getGeneratedKeys();
 
-        if (rs.next()) {
-            return rs.getInt(1);
-        }
+             if (rs.next()) {
+                 return rs.getInt(1);
+             }
 
-        return -1;
+             return -1;
+         }
+    }
+
+    public Project projectValues(final int projectId,
+                                 final ResultSet projectIdResultSet,
+                                 final List<Integer> deliveryEmployees)
+            throws SQLException {
+
+        return new Project(
+                projectId,
+                projectIdResultSet.getString("name"),
+                projectIdResultSet.getDouble("projectValue"),
+                projectIdResultSet.getInt("clientId"),
+                deliveryEmployees,
+                projectIdResultSet.getInt("techLeadId"),
+                projectIdResultSet.getBoolean("completed"));
+
+
     }
 }
