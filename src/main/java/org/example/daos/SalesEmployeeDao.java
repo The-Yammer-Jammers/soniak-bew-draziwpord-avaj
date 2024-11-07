@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+
 public class SalesEmployeeDao {
     static final int STATEMENT_PARAMETER_ONE = 1;
     static final int STATEMENT_PARAMETER_TWO = 2;
@@ -17,6 +18,7 @@ public class SalesEmployeeDao {
     static final int STATEMENT_PARAMETER_FOUR = 4;
     static final int STATEMENT_PARAMETER_FIVE = 5;
     static final int STATEMENT_PARAMETER_SIX = 6;
+
     public List<SalesEmployee> getSalesEmployees() throws SQLException {
         List<SalesEmployee> salesEmployees = new ArrayList<>();
         try (Connection connection = DatabaseConnector.getConnection()) {
