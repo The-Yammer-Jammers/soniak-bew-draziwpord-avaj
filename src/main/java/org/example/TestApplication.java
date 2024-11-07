@@ -37,7 +37,11 @@ public class TestApplication extends Application<TestConfiguration> {
                     final Environment environment) {
         environment.jersey()
                 .register(new TestController(new TestService(new TestDao())));
-        environment.jersey().register(new DeliveryEmployeeController(new DeliveryEmployeeService(new DeliveryEmployeeDao(), new DeliveryEmployeeCreateValidator(), new DeliveryEmployeeValidator())));
+        environment.jersey().register(new DeliveryEmployeeController(
+                new DeliveryEmployeeService(
+                        new DeliveryEmployeeDao(),
+                        new DeliveryEmployeeCreateValidator(),
+                        new DeliveryEmployeeValidator())));
     }
 }
 
