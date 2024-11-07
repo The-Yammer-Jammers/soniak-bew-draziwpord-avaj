@@ -2,7 +2,10 @@ package org.example.exceptions;
 
 public enum Entity {
     USER("User"),
-    SALES_EMPLOYEE("SalesEmployee");
+    CLIENT("Client"),
+    PROJECT("Project"),
+    DELIVERY_EMPLOYEE("Delivery Employee"),
+    SALES_EMPLOYEE("Sales Employee");
 
     private final String entity;
 

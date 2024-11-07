@@ -13,17 +13,22 @@ import org.example.auth.JwtAuthenticator;
 import org.example.auth.RoleAuthoriser;
 import org.example.controllers.AuthController;
 import org.example.controllers.SalesEmployeeController;
+import org.example.controllers.DeliveryEmployeeController;
 import org.example.controllers.TestController;
 import org.example.daos.AuthDao;
 import org.example.daos.SalesEmployeeDao;
+import org.example.daos.DeliveryEmployeeDao;
 import org.example.daos.TestDao;
 import org.example.models.JwtToken;
 import org.example.services.AuthService;
 import org.example.services.SalesEmployeeService;
+import org.example.services.DeliveryEmployeeService;
 import org.example.services.TestService;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
 import javax.crypto.SecretKey;
+import org.example.validators.DeliveryEmployeeCreateValidator;
+import org.example.validators.DeliveryEmployeeValidator;
 
 public class TestApplication extends Application<TestConfiguration> {
     public static void main(final String[] args) throws Exception {
@@ -60,6 +65,12 @@ public class TestApplication extends Application<TestConfiguration> {
         environment.jersey()
                 .register(new SalesEmployeeController(
                         new SalesEmployeeService(new SalesEmployeeDao())));
+
+        environment.jersey().register(new DeliveryEmployeeController(
+                new DeliveryEmployeeService(
+                        new DeliveryEmployeeDao(),
+                        new DeliveryEmployeeCreateValidator(),
+                        new DeliveryEmployeeValidator())));
     }
 
     AuthService initialiseAuthService(final Environment environment) {
