@@ -157,7 +157,8 @@ public class DeliveryEmployeeDao {
                         + " (employeeId) VALUES (?);";
 
                 PreparedStatement pstDeliveryEmployee = conn.prepareStatement(
-                        insertStatement, Statement.RETURN_GENERATED_KEYS
+                        insertStatementDeliveryEmployee,
+                        Statement.RETURN_GENERATED_KEYS
                 );
 
                 final int idIndex = 1;
