@@ -64,4 +64,57 @@ public class ProjectDao {
 
         return projects;
     }
+
+    public Project getProjectById(final int projectId) throws SQLException {
+        try (Connection connection = DatabaseConnector.getConnection()) {
+            String deliveryIdQuery =
+                    "SELECT deliveryEmployeeId FROM DeliveryEmployee_Project "
+                            + "INNER JOIN Project ON "
+                            + "Project.projectId = "
+                            + "DeliveryEmployee_Project.projectId "
+                            + "WHERE Project.projectId = ?;";
+
+            String projectIdQuery =
+                    "SELECT projectId,"
+                            + "name,"
+                            + "projectValue,"
+                            + "clientId,"
+                            + "techLeadId,"
+                            + "salesEmployeeId,"
+                            + "completed "
+                            + "FROM Project WHERE projectId = ?";
+            // Get Delivery employees where projectId = projectId
+
+            PreparedStatement deliveryStatement =
+                    connection.prepareStatement(deliveryIdQuery);
+
+            // Get selected projectId
+            PreparedStatement projectIdStatement =
+                    connection.prepareStatement(projectIdQuery);
+            projectIdStatement.setInt(1, projectId);
+
+            ResultSet projectIdResultSet = projectIdStatement.executeQuery();
+
+            while (projectIdResultSet.next()) {
+                deliveryStatement.setInt(1, projectId);
+                ResultSet deliveryResultSet = deliveryStatement.executeQuery();
+
+                if (!deliveryResultSet.next()) {
+                    continue;
+                }
+
+                final int deliveryEmployeeId =
+                        deliveryResultSet.getInt("deliveryEmployeeId");
+                return new Project(
+                        projectId,
+                        projectIdResultSet.getString("name"),
+                        projectIdResultSet.getDouble("projectValue"),
+                        projectIdResultSet.getInt("clientId"),
+                        projectIdResultSet.getInt("techLeadId"),
+                        deliveryEmployeeId,
+                        projectIdResultSet.getBoolean("completed"));
+            }
+        }
+        return null;
+    }
 }
