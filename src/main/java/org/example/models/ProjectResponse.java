@@ -10,7 +10,13 @@ public class ProjectResponse {
     private int techLeadId;
     private boolean completed;
 
-    public ProjectResponse(final int projectId, final String name, final double projectValue, final int clientId, final int deliveryEmployeeId, final int techLeadId, final boolean completed) {
+    public ProjectResponse(final int projectId,
+                           final String name,
+                           final double projectValue,
+                           final int clientId,
+                           final int deliveryEmployeeId,
+                           final int techLeadId,
+                           final boolean completed) {
         this.projectId = projectId;
         this.name = name;
         this.projectValue = projectValue;

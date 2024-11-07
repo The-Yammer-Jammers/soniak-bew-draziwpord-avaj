@@ -24,7 +24,10 @@ public class ProjectController {
     @Produces(MediaType.APPLICATION_JSON)
     public Response getProjects() {
         try {
-            return Response.ok().entity(projectService.getAllProjects()).build();
+            return Response
+                    .ok()
+                    .entity(projectService.getAllProjects())
+                    .build();
         } catch (SQLException e) {
             return Response.serverError().build();
         }

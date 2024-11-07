@@ -6,10 +6,11 @@ import org.example.models.ProjectResponse;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class ProjectMapper {
+public final class ProjectMapper {
+    private ProjectMapper() { }
 
     public static List<ProjectResponse> mapProjectListToProjectResponse(
-            List<Project> projects) {
+            final List<Project> projects) {
         return projects.stream()
                 .map(project -> new ProjectResponse(
                         project.getProjectId(),

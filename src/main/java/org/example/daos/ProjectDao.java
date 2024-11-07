@@ -32,8 +32,6 @@ public class ProjectDao {
                     "SELECT projectId, name, projectValue, clientId, techLeadId, salesEmployeeId, completed "
                             + "FROM Project"
             );
-            // Get deliveryEmployeeId
-
 
             while (resultSet.next()) {
                 final int projectId = resultSet.getInt("projectId");
@@ -44,7 +42,8 @@ public class ProjectDao {
                     continue;
                 }
 
-                final int deliveryEmployeeId = deliveryResultSet.getInt("deliveryEmployeeId");
+                final int deliveryEmployeeId =
+                        deliveryResultSet.getInt("deliveryEmployeeId");
                 Project project = new Project(
                         projectId,
                         resultSet.getString("name"),
