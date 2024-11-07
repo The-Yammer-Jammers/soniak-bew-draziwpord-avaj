@@ -10,7 +10,7 @@ import io.federecio.dropwizard.swagger.SwaggerBundle;
 import io.federecio.dropwizard.swagger.SwaggerBundleConfiguration;
 import io.jsonwebtoken.Jwts;
 import org.example.auth.JwtAuthenticator;
-import org.example.auth.RoleAuthorisor;
+import org.example.auth.RoleAuthoriser;
 import org.example.controllers.AuthController;
 import org.example.controllers.TestController;
 import org.example.daos.AuthDao;
@@ -61,7 +61,7 @@ public class TestApplication extends Application<TestConfiguration> {
         environment.jersey().register(new AuthDynamicFeature(
                 new OAuthCredentialAuthFilter.Builder<JwtToken>()
                         .setAuthenticator(new JwtAuthenticator(jwtKey))
-                        .setAuthorizer(new RoleAuthorisor())
+                        .setAuthorizer(new RoleAuthoriser())
                         .setPrefix("Bearer")
                         .buildAuthFilter()
         ));
