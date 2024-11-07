@@ -1,4 +1,5 @@
 package org.example.controllers;
+
 import io.swagger.annotations.Api;
 import org.example.exceptions.DoesNotExistException;
 import org.example.exceptions.FailedToCreateException;
@@ -52,7 +53,8 @@ public class DeliveryEmployeeController {
             return Response.ok().entity(
                     deliveryEmployeeService.getAllDeliveryEmployees()).build();
         } catch (SQLException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage()).build();
         } catch (DoesNotExistException e) {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity(e.getMessage()).build();
@@ -62,43 +64,56 @@ public class DeliveryEmployeeController {
     @POST
     @Path("/create")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response createDeliveryEmployee(final DeliveryEmployeeCreateRequest deliveryEmployeeCreateRequest) {
+    public Response createDeliveryEmployee(
+            final DeliveryEmployeeCreateRequest deliveryEmployeeCreateRequest
+    ) {
         try {
             return Response.status(Response.Status.CREATED)
-                    .entity(deliveryEmployeeService.createDeliveryEmployee(deliveryEmployeeCreateRequest))
+                    .entity(deliveryEmployeeService.createDeliveryEmployee(
+                            deliveryEmployeeCreateRequest
+                    ))
                     .build();
         } catch (SQLException | FailedToCreateException | InvalidException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage()).build();
         }
     }
 
     @PUT
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response updateProduct(@PathParam("id") final int id, final DeliveryEmployeeRequest deliveryEmployeeRequest) {
+    public Response updateProduct(
+            @PathParam("id") final int id,
+            final DeliveryEmployeeRequest deliveryEmployeeRequest
+    ) {
         try {
-            deliveryEmployeeService.updateDeliveryEmployee(id, deliveryEmployeeRequest);
+            deliveryEmployeeService.updateDeliveryEmployee(id,
+                    deliveryEmployeeRequest
+            );
             return Response.noContent().build();
         } catch (SQLException e) {
             return Response.serverError().build();
         } catch (InvalidException e) {
-            return Response.status(Response.Status.BAD_REQUEST).entity(e.getMessage()).build();
+            return Response.status(Response.Status.BAD_REQUEST)
+                    .entity(e.getMessage()).build();
         } catch (DoesNotExistException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage()).build();
         }
     }
 
     @DELETE
     @Path("/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteProduct(@PathParam("id") int id) {
+    public Response deleteProduct(final @PathParam("id") int id) {
         try {
             deliveryEmployeeService.deleteDeliveryEmployee(id);
             return Response.noContent().build();
         } catch (SQLException e) {
             return Response.serverError().build();
         } catch (DoesNotExistException e) {
-            return Response.status(Response.Status.NOT_FOUND).entity(e.getMessage()).build();
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity(e.getMessage()).build();
         }
     }
 }

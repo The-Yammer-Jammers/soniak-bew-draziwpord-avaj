@@ -4,11 +4,11 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class DeliveryEmployeeCreateRequest {
-    private final String firstName;
-    private final String lastName;
-    private final Double salary;
-    private final String bankAccountNumber;
-    private final String nationalInsuranceNumber;
+    private String firstName;
+    private String lastName;
+    private Double salary;
+    private String bankAccountNumber;
+    private String nationalInsuranceNumber;
 
     @JsonCreator
     public DeliveryEmployeeCreateRequest(
@@ -29,19 +29,41 @@ public class DeliveryEmployeeCreateRequest {
         return firstName;
     }
 
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
     public String getLastName() {
         return lastName;
+    }
+
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
     }
 
     public Double getSalary() {
         return salary;
     }
 
+    public void setSalary(final Double salary) {
+        this.salary = salary;
+    }
+
     public String getBankAccountNumber() {
         return bankAccountNumber;
     }
 
+    public void setBankAccountNumber(final String bankAccountNumber) {
+        this.bankAccountNumber = bankAccountNumber;
+    }
+
     public String getNationalInsuranceNumber() {
         return nationalInsuranceNumber;
+    }
+
+    public void setNationalInsuranceNumber(
+            final String nationalInsuranceNumber
+    ) {
+        this.nationalInsuranceNumber = nationalInsuranceNumber;
     }
 }

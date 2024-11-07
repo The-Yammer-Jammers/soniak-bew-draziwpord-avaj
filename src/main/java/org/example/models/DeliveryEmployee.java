@@ -1,19 +1,20 @@
 package org.example.models;
 
 public class DeliveryEmployee {
-    private int deliveryEmployeeId;
-    private String firstName;
-    private String lastName;
-    private Double salary;
-    private String bankAccountNumber;
-    private String nationalInsuranceNumber;
+    private final int employeeId;
+    private final String firstName;
+    private final String lastName;
+    private final Double salary;
+    private final String bankAccountNumber;
+    private final String nationalInsuranceNumber;
 
-    public DeliveryEmployee(int deliveryEmployeeId,
-                            String firstName,
-                            String lastName, Double salary,
-                            String bankAccountNumber,
-                            String nationalInsuranceNumber) {
-        this.deliveryEmployeeId = deliveryEmployeeId;
+    public DeliveryEmployee(final int employeeId,
+                            final String firstName,
+                            final String lastName,
+                            final Double salary,
+                            final String bankAccountNumber,
+                            final String nationalInsuranceNumber) {
+        this.employeeId = employeeId;
         this.firstName = firstName;
         this.lastName = lastName;
         this.salary = salary;
@@ -21,8 +22,8 @@ public class DeliveryEmployee {
         this.nationalInsuranceNumber = nationalInsuranceNumber;
     }
 
-    public int getDeliveryEmployeeId() {
-        return deliveryEmployeeId;
+    public int getEmployeeId() {
+        return employeeId;
     }
 
     public String getFirstName() {

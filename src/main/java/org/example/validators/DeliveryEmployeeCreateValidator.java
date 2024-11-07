@@ -6,7 +6,9 @@ import org.example.exceptions.Entity;
 
 public class DeliveryEmployeeCreateValidator {
 
-    public void validateDeliveryEmployee(final DeliveryEmployeeCreateRequest deliveryEmployeeRequest) throws InvalidException {
+    public void validateDeliveryEmployee(
+            final DeliveryEmployeeCreateRequest deliveryEmployeeRequest
+    ) throws InvalidException {
         final int maxNameCharacterLength = 25;
         final int bankAccountNumberLength = 8;
         final int nationalInsuranceNumberLength = 9;

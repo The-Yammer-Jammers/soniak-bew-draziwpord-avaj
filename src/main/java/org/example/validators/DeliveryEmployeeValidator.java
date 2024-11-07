@@ -6,7 +6,9 @@ import org.example.models.DeliveryEmployeeRequest;
 
 public class DeliveryEmployeeValidator {
 
-    public void validateDeliveryEmployee(final DeliveryEmployeeRequest deliveryEmployeeRequest) throws InvalidException {
+    public void validateDeliveryEmployee(
+            final DeliveryEmployeeRequest deliveryEmployeeRequest
+    ) throws InvalidException {
         final int maxNameCharacterLength = 25;
         final int bankAccountNumberLength = 8;
 
