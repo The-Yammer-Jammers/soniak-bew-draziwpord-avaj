@@ -14,15 +14,18 @@ import org.example.auth.RoleAuthoriser;
 import org.example.controllers.AuthController;
 import org.example.controllers.SalesEmployeeController;
 import org.example.controllers.DeliveryEmployeeController;
+import org.example.controllers.ProjectController;
 import org.example.controllers.TestController;
 import org.example.daos.AuthDao;
 import org.example.daos.SalesEmployeeDao;
 import org.example.daos.DeliveryEmployeeDao;
+import org.example.daos.ProjectDao;
 import org.example.daos.TestDao;
 import org.example.models.JwtToken;
 import org.example.services.AuthService;
 import org.example.services.SalesEmployeeService;
 import org.example.services.DeliveryEmployeeService;
+import org.example.services.ProjectService;
 import org.example.services.TestService;
 import org.glassfish.jersey.server.filter.RolesAllowedDynamicFeature;
 
@@ -58,6 +61,12 @@ public class TestApplication extends Application<TestConfiguration> {
 
         environment.jersey()
                 .register(new TestController(new TestService(new TestDao())));
+
+        environment.jersey()
+                .register(new ProjectController(
+                        new ProjectService(
+                                new ProjectDao()
+                        )));
 
         environment.jersey()
                 .register(new AuthController(authService));

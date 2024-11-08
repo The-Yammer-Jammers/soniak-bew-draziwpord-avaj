@@ -1,4 +1,4 @@
-Create Table SalesEmployee (
+CREATE TABLE SalesEmployee (
 	employeeId int NOT NULL,
 	commissionRate decimal(4,3) NOT NULL,
 	CHECK (commissionRate<=1),

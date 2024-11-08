@@ -24,7 +24,7 @@ public class UserRole {
     }
 
     public String getRoleName() {
-        if (ROLES_MAP.containsKey(this.roleId)) {
+        if (!ROLES_MAP.containsKey(this.roleId)) {
             return "";
         }
 
