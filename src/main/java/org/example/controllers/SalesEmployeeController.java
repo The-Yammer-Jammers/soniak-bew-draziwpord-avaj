@@ -7,7 +7,6 @@ import io.swagger.annotations.Authorization;
 import org.example.exceptions.DoesNotExistException;
 import org.example.exceptions.FailedToCreateException;
 import org.example.exceptions.InvalidException;
-import org.example.models.DeliveryEmployee;
 import org.example.models.SalesEmployeeRequest;
 import org.example.models.SalesEmployeeResponse;
 import org.example.models.UserRole;

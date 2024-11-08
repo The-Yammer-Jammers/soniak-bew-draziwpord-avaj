@@ -9,7 +9,6 @@ import org.example.exceptions.InvalidException;
 import org.example.models.Project;
 import org.example.models.ProjectRequest;
 import org.example.models.ProjectResponse;
-import org.example.models.SalesEmployeeResponse;
 import org.example.models.UserRole;
 import org.example.services.ProjectService;
 
